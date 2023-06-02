@@ -1,21 +1,21 @@
 import { ToastOptions } from "../types";
 
-type AddCallback = (message: string, options?: ToastOptions) => void;
+type Callback = (message: string, options?: ToastOptions) => void;
 
 interface CallbackManager {
-  addCallback: AddCallback | null;
-  setAddCallback: (callback: AddCallback) => void;
-  invoke: AddCallback;
+  callback: Callback | null;
+  setCallback: (callback: Callback) => void;
+  invoke: Callback;
 }
 
 const callbackManager: CallbackManager = {
-  addCallback: null,
-  setAddCallback(callback: AddCallback) {
-    this.addCallback = callback;
+  callback: null,
+  setCallback(callback: Callback) {
+    this.callback = callback;
   },
   invoke(message: string, options?: ToastOptions) {
-    if (this.addCallback) {
-      this.addCallback(message, options);
+    if (this.callback) {
+      this.callback(message, options);
     }
   },
 };

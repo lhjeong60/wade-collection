@@ -1,21 +1,21 @@
-import React, { CSSProperties, useEffect, useRef } from "react";
+import React, { CSSProperties } from "react";
 import { styled } from "styled-components";
-import { ToastType } from "../types";
+import { ToastType, ToastColor, AnimationPlayState } from "../types";
+import { decreaseWidth } from "../utils/animations";
 
 interface ProgressBarProps {
   style?: CSSProperties;
-  flag: "ready" | "start";
+  pause: boolean;
   type: ToastType;
   duration: number; //ms
 }
 
-const ProgressBar = ({ style, flag, type, duration }: ProgressBarProps) => {
+const ProgressBar = ({ style, pause, type, duration }: ProgressBarProps) => {
   return (
     <Container style={style}>
       <Bar
-        style={{
-          width: flag === "ready" ? "100%" : "0",
-        }}
+        type={type}
+        pause={pause ? "paused" : "running"}
         duration={duration}
       />
     </Container>
@@ -25,20 +25,25 @@ const ProgressBar = ({ style, flag, type, duration }: ProgressBarProps) => {
 export default ProgressBar;
 
 const Container = styled.div`
-  width: 100%;
   height: 5px;
-  background-color: #904cf9;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
 `;
 
 interface BarProps {
+  type: ToastType;
+  pause: AnimationPlayState;
   duration: number;
 }
 
 const Bar = styled.div<BarProps>`
   height: 100%;
-  background-color: white;
-  transition-property: width;
-  transition-duration: ${({ duration }) => `${duration / 1000}s`};
+  background-color: ${({ type }) => ToastColor[type]};
+  filter: brightness(1.4);
+  animation-name: ${decreaseWidth};
+  animation-duration: ${({ duration }) => `${duration / 1000}s`};
+  animation-timing-function: linear;
+  animation-play-state: ${({ pause }) => pause};
+  animation-fill-mode: forwards;
 `;

@@ -40,6 +40,7 @@ const Toaster = ({
   autoClose = 2000,
   progressBar = true,
   bottomIsLatest = false,
+  pauseOnMouseOver = true,
 }: ToasterProps) => {
   const [toasts, setToasts] = useState<Map<ToastPosition, ToastObject[]>>(
     new Map<ToastPosition, ToastObject[]>()
@@ -53,18 +54,11 @@ const Toaster = ({
         type: options?.type || type,
         position: options?.position || position,
         autoClose: options?.autoClose || autoClose,
-        state: "valid",
-        progressBar:
-          options?.progressBar !== undefined
-            ? options?.progressBar
-            : progressBar,
+        progressBar: options?.progressBar || progressBar,
+        pauseOnMouseOver: options?.pauseOnMouseOver || pauseOnMouseOver,
       };
 
-      const {
-        id: newId,
-        autoClose: newAutoClose,
-        position: newPosition,
-      } = newToast;
+      const { position: newPosition } = newToast;
 
       setToasts((toasts) => {
         const newToastsMap = new Map(toasts);
@@ -74,25 +68,9 @@ const Toaster = ({
 
         return newToastsMap;
       });
-
-      setTimeout(() => {
-        setToasts((toasts) => {
-          const newToastsMap = new Map(toasts);
-
-          const staleToast = newToastsMap
-            .get(newPosition)
-            ?.find((toast) => toast.id === newId);
-
-          if (staleToast) {
-            staleToast.state = "stale";
-          }
-
-          return newToastsMap;
-        });
-      }, newAutoClose);
     }
 
-    callbackManager.setAddCallback(addToast);
+    callbackManager.setCallback(addToast);
   }, [position, autoClose, type]);
 
   const removeToast = useCallback(

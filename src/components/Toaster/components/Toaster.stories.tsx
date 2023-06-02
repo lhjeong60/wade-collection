@@ -124,4 +124,6 @@ Base.args = {
   position: "top-center",
   type: "wade",
   bottomIsLatest: false,
+  progressBar: true,
+  pauseOnMouseOver: true,
 };

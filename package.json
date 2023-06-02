@@ -49,6 +49,8 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@storybook/addon-actions": "^7.0.18",
+    "@storybook/addon-console": "^2.0.0",
     "moment": "^2.29.4"
   }
 }

@@ -8,13 +8,22 @@ export type ToastPosition =
 
 export type ToastType = "info" | "success" | "warning" | "error" | "wade";
 
+export const ToastColor = {
+  info: "#0090e0",
+  success: "#34c240",
+  warning: "#ffcc00",
+  error: "#cc3300",
+  wade: "#904CF9",
+};
+
 export type ToastId = number | string;
 
-export type ToastState = "stale" | "valid";
+export type ToastState = "ready" | "valid" | "stale";
+
+export type AnimationPlayState = "paused" | "running";
 
 export interface ToastInfo {
   id: ToastId;
-  state: ToastState;
 }
 
 export interface ToastOptions {
@@ -22,6 +31,7 @@ export interface ToastOptions {
   position?: ToastPosition;
   autoClose?: number;
   progressBar?: boolean;
+  pauseOnMouseOver?: boolean;
 }
 
 export interface ToastObject extends ToastInfo, Required<ToastOptions> {
