@@ -39,7 +39,7 @@ const Toast = ({
     (e) => {
       if (e.animationName === entranceFrom.get(position).name) {
         if (toastState === "ready") {
-          setToastState("valid");
+          setToastState(progressBar ? "valid" : "stale");
         } else if (toastState === "stale") {
           removeToast(id, position);
         }
@@ -51,7 +51,7 @@ const Toast = ({
         }
       }
     },
-    [toastState, setToastState, removeToast, id, position]
+    [toastState, setToastState, removeToast, id, position, progressBar]
   );
 
   const onMouseEnterHandler: MouseEventHandler = useCallback(() => {

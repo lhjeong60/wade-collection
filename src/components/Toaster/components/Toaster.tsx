@@ -9,31 +9,6 @@ interface ToasterProps extends ToastOptions {
   bottomIsLatest?: boolean;
 }
 
-const StyledUl = styled.ul<{ position: ToastPosition }>`
-  position: fixed;
-  list-style: none;
-  padding: 0;
-  margin: ${(props) => (props.position.includes("center") ? "0 auto" : 0)};
-  top: ${(props) => (props.position.includes("top") ? "1em" : "unset")};
-  bottom: ${(props) => (props.position.includes("bottom") ? "1em" : "unset")};
-  right: ${(props) => {
-    if (props.position.includes("right")) return "1em";
-    if (props.position.includes("center")) return 0;
-    return "unset";
-  }};
-  left: ${(props) => {
-    if (props.position.includes("left")) return "1em";
-    if (props.position.includes("center")) return 0;
-    return "unset";
-  }};
-  width: 300px;
-  li {
-    &:not(:last-child) {
-      margin-bottom: 0.5em;
-    }
-  }
-`;
-
 const Toaster = ({
   type = "wade",
   position = "top-right",
@@ -71,7 +46,7 @@ const Toaster = ({
     }
 
     callbackManager.setCallback(addToast);
-  }, [position, autoClose, type]);
+  }, [type, position, autoClose, progressBar, pauseOnMouseOver]);
 
   const removeToast = useCallback(
     (id: ToastId, position: ToastPosition) => {
@@ -113,6 +88,31 @@ const Toaster = ({
     document.body
   );
 };
+
+const StyledUl = styled.ul<{ position: ToastPosition }>`
+  position: fixed;
+  list-style: none;
+  padding: 0;
+  margin: ${(props) => (props.position.includes("center") ? "0 auto" : 0)};
+  top: ${(props) => (props.position.includes("top") ? "1em" : "unset")};
+  bottom: ${(props) => (props.position.includes("bottom") ? "1em" : "unset")};
+  right: ${(props) => {
+    if (props.position.includes("right")) return "1em";
+    if (props.position.includes("center")) return 0;
+    return "unset";
+  }};
+  left: ${(props) => {
+    if (props.position.includes("left")) return "1em";
+    if (props.position.includes("center")) return 0;
+    return "unset";
+  }};
+  width: 300px;
+  li {
+    &:not(:last-child) {
+      margin-bottom: 0.5em;
+    }
+  }
+`;
 
 export default Toaster;
 
