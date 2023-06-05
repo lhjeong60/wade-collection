@@ -39,17 +39,14 @@ const Toast = ({
     (e) => {
       if (e.animationName === entranceFrom.get(position).name) {
         if (toastState === "ready") {
-          console.log("ready >>>> valid", e.animationName);
           setToastState("valid");
         } else if (toastState === "stale") {
-          console.log("invoke remove", e.animationName);
           removeToast(id, position);
         }
       }
 
       if (e.animationName === decreaseWidth.name) {
         if (toastState === "valid") {
-          console.log("valid >>>> stale", e.animationName);
           setToastState("stale");
         }
       }
